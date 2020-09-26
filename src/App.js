@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useSelector, useDispatch } from "react-redux"
+import {increment,decrement} from "./actions"
 import './App.css';
+import MovieList from "./components/MovieList"
+import Nav from "./components/Nav"
+import AddMovie from './components/AddMovie';
 
 function App() {
+  const counter = useSelector(state => state.counterReducer);
+  const movies = useSelector(state=>state.movieReducer)
+  const dispatch = useDispatch()
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="center">
+      <h3>Counter {counter}</h3>
+      <button onClick={()=>dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <Nav length={movies.length}/>
+      <AddMovie movies={movies}/>
+      <MovieList movies={movies}/>
     </div>
   );
 }
